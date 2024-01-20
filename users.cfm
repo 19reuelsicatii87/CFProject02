@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Users List</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -16,41 +16,7 @@
 <body>
 
     <!--- Header --->
-    <div Section="header" class="container mt-3">
-        <div class="row py-3" style="background-color: #44619d">
-            <div class="col-lg-2 d-flex justify-content-end pe-0">
-                
-                <a href="https://www.seoreseller.com">
-                    <img src="/assets/img/logo-black.svg" class="img-fluid" width="200px" height="30px">
-                </a>                
-                
-            </div>
-            <div class="col-lg-6 d-flex align-items-center">
-               
-                <div class="d-flex flex-row align-items-center">
-                    <div class="me-2">
-                        <h5 class="text-white-50">Dashboard</h5>  
-                    </div>
-                    <div class="me-2">
-                        <h5 class="text-white-50">Campaign</h5> 
-                    </div>
-                    <div class="">
-                        <h5 class="text-white-50">User</h5> 
-                    </div>
-                </div>   
-                
-            </div>
-            <div class="col-lg-4 d-flex align-items-center flex-row-reverse">
-                
-                <div class="">
-                    <div class="ms-2">
-                        <h5 class="text-white-50">Profile</h5>  
-                    </div>                       
-                </div>   
-                
-            </div>        
-        </div>
-    </div>
+    <cfinclude template="/components/header.cfm"> 
 
     <div section="users-list" class="container mt-3">
 

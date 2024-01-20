@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>User Detail</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -14,50 +14,219 @@
 <body>
 
     <!--- Header --->
-    <div Section="header" class="container mt-3">
-        <div class="row py-3" style="background-color: #44619d">
-            <div class="col-lg-3 d-flex justify-content-end pe-0">
-                <!--- <div class="d-flex justify-content-end"> --->
-                    <a href="https://www.seoreseller.com">
-                        <img src="/assets/img/logo-black.svg" class="img-fluid" width="200px" height="30px">
-                     </a>                
-                <!--- </div> --->
-            </div>
-            <div class="col-lg-5 d-flex align-items-center">
-                <!--- <div class="row"> --->
-                    <div class="d-flex flex-row">
-                        <div class="me-2">
-                           <h5 class="text-white-50">Dashboard</h5>  
-                        </div>
-                        <div class="me-2">
-                            <h5 class="text-white-50">Campaign</h5> 
-                        </div>
-                        <div class="">
-                            <h5 class="text-white-50">User</h5> 
-                        </div>
-                    </div>   
-                <!--- </div>  --->
-            </div>
-            <div class="col-lg-4 d-flex align-items-center flex-row-reverse">
-                <!--- <div class="row"> --->
-                    <div class="">
-                        <div class="ms-2">
-                           <h5 class="text-white-50">Profile</h5>  
-                        </div>                       
-                    </div>   
-                <!--- </div>  --->
-            </div>        
-        </div>
-    </div>
+    <cfinclude template="/components/header.cfm"> 
 
     <div section="user-details" class="container mt-3">
 
-        <!--- Retrieve All Users from Database --->
+
+
+        <cfset credMessages = "">
+        <cfif structKeyExists(FORM, "fld_saveCredsForm")>
+            <cfquery datasource="central_remote" name="rs_userSaveCreds" result="rs_userSaveCredsRecordCount">
+                UPDATE tbl_user
+                SET username = <cfqueryparam cfsqltype="varchar" value="#form.fld_usernameCredsForm#">,
+                    password = <cfqueryparam cfsqltype="varchar" value="#form.fld_passwordCredsForm#">
+                WHERE id = <cfqueryparam cfsqltype="integer" value="#form.fld_idCredsForm#">
+            </cfquery>
+
+            <cfif rs_userSaveCredsRecordCount.recordCount GT 0>
+                <cfset credMessages = 1>
+            <cfelse>
+                <cfset credMessages = 0>
+            </cfif>
+        <cfelseif structKeyExists(FORM, "fld_deleteCredsForm")>
+            <cfquery datasource="central_remote" name="rs_userSaveCreds" result="rs_userSaveCredsRecordCount">
+                UPDATE tbl_user
+                SET username = <cfqueryparam cfsqltype="varchar" value="#form.fld_usernameCredsForm#">,
+                    password = <cfqueryparam cfsqltype="varchar" value="#form.fld_passwordCredsForm#">
+                WHERE id = <cfqueryparam cfsqltype="integer" value="111111">
+            </cfquery>
+
+            <cfif rs_userSaveCredsRecordCount.recordCount GT 0>
+                <cfset credMessages = 1>
+            <cfelse>
+                <cfset credMessages = 0>
+            </cfif>
+        </cfif>
+
+        <!--- Always Run:Retrieve Specific User from Database --->
         <cfquery datasource="central_remote" name="rs_user" result="rs_userRecordCount">
             SELECT * FROM tbl_user
-         </cfquery>
+            WHERE id = <cfqueryparam cfsqltype="integer" value="#url.id#">
+        </cfquery>
 
-        <cfdump var="#URL#"></cfdump>
+        <!--- User Credential Section --->
+        <div class="col-lg-9 p-2">
+            <div class="border bg-light" >
+                <div class="d-flex align-items-center" style="height:2em">
+                    <div class="fw-bold ms-1">Credentials</div>   
+                </div>
+            </div>
+            <div class="border p-3">
+                <cfform method="post">                    
+                    <div class="row mb-4">
+                        <cfoutput>
+                            <input type="hidden" name="fld_idCredsForm" value="#rs_user.id#">
+                        </cfoutput>
+                        <div class="col-lg mb-1">
+                            <div class="row">
+                                <div class="col-lg-4 ">
+                                    <label class="">Username</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <cfoutput>
+                                        <input class="w-100" type="text" value="#rs_user.username#" name="fld_usernameCredsForm" >
+                                    </cfoutput>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg mb-1">
+                            <div class="row">
+                                <div class="col-lg-3 d-flex justify-content-end px-0">
+                                    <label class="">Password</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <cfoutput>
+                                        <input class="w-100" type="text" value="#rs_user.password#" name="fld_passwordCredsForm">
+                                    </cfoutput>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+             
+                    <div class="row">
+                        <div class="col-lg-7">                 
+                        </div>
+                        <div class="col-lg-2 pe-1">
+                            <button type="submit" class="btn btn-danger w-100"
+                            name="fld_deleteCredsForm">Delete</button>
+                        </div>  
+                        <div class="col-lg-3 ps-1">
+                            <button type="submit" class="btn btn-primary w-100"
+                            name="fld_saveCredsForm">Save</button>
+                        </div>                        
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-7">                 
+                        </div>
+                        <div class="col-lg-5 d-flex flex-row-reverse"> 
+                            <cfif credMessages EQ 1>
+                                <small class="text-success">Credentials updated successfully!</small>
+                            <cfelseif credMessages EQ 0>
+                                <small class="text-danger">Unable to update Credentials!</small>
+                            </cfif>
+                        </div>
+                    </div> 
+                </cfform>
+            </div>
+        </div>
+
+        <!--- User Profile Section --->
+        <div class="col-lg-9 p-2">
+        <div class="border bg-light" >
+            <div class="d-flex align-items-center" style="height:2em">
+                <div class="fw-bold ms-1">Profile Information</div>   
+            </div>
+        </div>
+        <div class="border p-3">
+            <form>
+                
+                <div class="row mb-2">
+                    <div class="col-lg mb-1">
+                        <div class="row">
+                            <div class="col-lg-4 ">
+                                <label class="">First Name</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input class="w-100" type="text" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg mb-1">
+                        <div class="row">
+                            <div class="col-lg-3 d-flex justify-content-end px-0">
+                                <label class="">Last Name</label>
+                            </div>
+                            <div class="col-lg-9">
+                                <input class="w-100" type="text" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-lg-2 ">
+                        <label class="">Address 1</label>
+                    </div>
+                    <div class="col-lg-10">
+                        <input class="w-100" type="text" >
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-lg-2 ">
+                        <label class="">Address 2</label>
+                    </div>
+                    <div class="col-lg-10">
+                        <input class="w-100" type="text" >
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-lg-2 ">
+                        <label class="">Street</label>
+                    </div>
+                    <div class="col-lg-10">
+                        <input class="w-100" type="text" >
+                    </div>
+                </div>                    
+                <div class="row mb-4">
+                    <div class="col-lg-6 mb-1">
+                        <div class="row">
+                            <div class="col-lg-4 ">
+                                <label class="">City</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input class="w-100" type="text" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 mb-1">
+                        <div class="row">
+                            <div class="col-lg-3 d-flex justify-content-end px-0">
+                                <label class="">State</label>
+                            </div>
+                            <div class="col-lg-9">
+                                <input class="w-100" type="text" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 d-flex justify-content-end">
+                        <div class="row">
+                            <div class="col-lg-4 d-flex justify-content-end px-0">
+                                <label class="">Zip Code</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input class="w-100" type="text" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-lg-7">                 
+                    </div>
+                    <div class="col-lg-2 pe-1">
+                        <button type="submit" class="btn btn-danger w-100"
+                        name="fld_submitCredsForm" id="fld_submitCredsForm">Delete</button>
+                    </div>  
+                    <div class="col-lg-3 ps-1">
+                        <button type="submit" class="btn btn-primary w-100"
+                        name="fld_submitCredsForm" id="fld_submitCredsForm">Save</button>
+                    </div>                        
+                </div>
+            </form>
+        </div>
+        </div>
+
+        
 
     </div>
 

@@ -28,7 +28,7 @@
                   </div>
                   <div class="col-lg-6 p-1">
                      <div class="d-flex flex-row-reverse bd-highlight">                     
-                        <a href="https://www.seoreseller.com" >Create an Account</a>
+                        <a href="/sign-up.cfm" >Create an Account</a>
                         <p class="me-1">New to SEOReseller?</p>
                      </div>
                   </div>
