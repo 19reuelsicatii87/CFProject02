@@ -18,7 +18,7 @@
 </head>
 
 <body>
-<h1>Hello dear visitor, today is <cfoutput>#dateFormat(now())#</cfoutput></h1>
+<h1>Hello dear visitor, today is <cf_today></h1>
 <p>Here is a first image with a legend</p>
 <!---First Picture--->
 <div class="imageWrapper">

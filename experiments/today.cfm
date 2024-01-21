@@ -1,0 +1,1 @@
+<cfoutput>#dateFormat(now())#  --- THIS IS CUSTOM TAG</cfoutput>

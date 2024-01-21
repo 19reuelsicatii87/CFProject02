@@ -20,6 +20,13 @@
 
     <div section="users-list" class="container mt-3">
 
+        <cfif structKeyExists(url, "method") and url.method eq "deleteUser">
+            <cfquery datasource="central_remote" name="rs_userSaveCreds" result="rs_userSaveCredsRecordCount">
+                DELETE FROM tbl_user
+                WHERE id = <cfqueryparam cfsqltype="integer" value="#url.id#">
+            </cfquery>
+        </cfif>
+
         <!--- Retrieve All Users from Database --->
         <cfquery datasource="central_remote" name="rs_user" result="rs_userRecordCount">
             SELECT * FROM tbl_user
@@ -39,8 +46,11 @@
                         <td>#username#</td>
                         <td>#firstname# #lastname#</td>
                         <td class="d-flex justify-content-center">
-                            <a href="/user.cfm?id=#id#">
+                            <a class="me-2" href="/user.cfm?id=#id#">
                                 <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <a href="/users.cfm?method=deleteUser&id=#id#">
+                                <i class="bi bi-trash"></i>
                             </a>
                         </td>
                     </tr>

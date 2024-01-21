@@ -13,13 +13,13 @@
       </cfoutput>
 
       <!--- LOCAL DataSource --->
-      <cfquery datasource="central" name="rs_user_local">
+      <!--- <cfquery datasource="central" name="rs_user_local">
          SELECT * FROM tbl_user
       </cfquery>
       <h1>Local DB - DataSource</h1>
       <cfoutput query="rs_user_local">
          <p>#id# #firstName# #lastName#</p>
-      </cfoutput>
+      </cfoutput> --->
 
       <!--- REMOTE DataSource --->
       <cfquery datasource="central_remote" name="rs_user_remote">
@@ -40,8 +40,6 @@
             <option value="0" selected>Please select username</option>
          </cfselect >
       </cfform>
-
-     
 
 
     

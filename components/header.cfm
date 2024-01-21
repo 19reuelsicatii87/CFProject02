@@ -21,7 +21,7 @@
                             <a class="nav-link active" href="/about-us">Campaign</a>
                          </li>
                          <li class="nav-item">
-                            <a class="nav-link active" href="/contact-us">Users</a>
+                            <a class="nav-link active" href="/users.cfm">Users</a>
                          </li>
                       </ul>
                    </div>
@@ -52,7 +52,7 @@
                             <a class="nav-link active" href="/about-us">Campaign</a>
                          </li>
                          <li class="nav-item">
-                            <a class="nav-link active" href="/contact-us">Users</a>
+                            <a class="nav-link active" href="/users.cfm">Users</a>
                          </li>
                       </ul>
                    </div>

@@ -184,7 +184,7 @@
                         </div>
                      </div>
                   </div>
-                  <div class="mb-2">
+                  <div class="mb-4">
                      <label for="fld_password">
                      Password
                      </label>
@@ -197,19 +197,6 @@
                            </div>
                         </div>
 
-                  </div>
-                  <div class="row mt-4">
-                     <div class="col-lg-6">
-                        <div class="d-flex flex-row">
-                           <cfinput type="checkbox" class="me-1" id="fld_remember" name="fld_remember">
-                           <small class="mb-0">Remember Me</small>
-                        </div>
-                     </div>
-                     <div class="col-lg-6">
-                        <div class="d-flex flex-row-reverse">
-                           <a href="https://account.seoreseller.com/forgot-password" class="forgot-password-link"><small>Forgot Password?</small></a>
-                        </div>
-                     </div>
                   </div>
                   <div class="mt-1">
                      <cfinput type="submit" class="btn btn-primary w-100" name="fld_submitSignUpForm" 
