@@ -16,7 +16,7 @@
 <body>
 
     <!--- Header --->
-    <cfinclude template="/components/header.cfm"> 
+    <cfmodule template="\view\headerIn.cfm">
 
     <div section="users-list" class="container mt-3">
 
