@@ -18,45 +18,24 @@
     <!--- Header --->
     <cfmodule template="\view\headerIn.cfm">
 
-    <div section="users-list" class="container mt-3">
+    <div class="container mt-3">
 
         <cfif structKeyExists(url, "method") and url.method eq "deleteUser">
-            <cfquery datasource="central_remote" name="rs_userSaveCreds" result="rs_userSaveCredsRecordCount">
-                DELETE FROM tbl_user
-                WHERE id = <cfqueryparam cfsqltype="integer" value="#url.id#">
-            </cfquery>
+            <cfinvoke component="service.user"
+            method="deleteUserById"
+            returnvariable="deleteUserById">	
+            <cfinvokeargument name="id" value=#url.id#>			
+            </cfinvoke>	
         </cfif>
 
-        <!--- Retrieve All Users from Database --->
-        <cfquery datasource="central_remote" name="rs_user" result="rs_userRecordCount">
-            SELECT * FROM tbl_user
-         </cfquery>
+        <!--- Retrieve All Users from Database --->                
+        <cfinvoke component="service.user"
+        method="retrieveUserAll"
+        returnvariable="retrieveUserAll">		
+        </cfinvoke>	
 
-        <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Username</th>
-                <th scope="col">Name</th>
-                <th scope="col" class="d-flex justify-content-center">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-                <cfoutput query="rs_user">
-                    <tr>
-                        <td>#username#</td>
-                        <td>#firstname# #lastname#</td>
-                        <td class="d-flex justify-content-center">
-                            <a class="me-2" href="/user.cfm?id=#id#">
-                                <i class="bi bi-pencil-square"></i>
-                            </a>
-                            <a href="/users.cfm?method=deleteUser&id=#id#">
-                                <i class="bi bi-trash"></i>
-                            </a>
-                        </td>
-                    </tr>
-                </cfoutput>              
-            </tbody>
-        </table>
+        <!--- Users Table --->
+        <cfmodule template="\view\userTable.cfm" userAll=#retrieveUserAll#>         
 
     </div>
 
