@@ -52,7 +52,7 @@
 
         <cfelseif structKeyExists(FORM, "fld_saveProfileForm")>
 
-            <cfinvoke component="service.user"
+            <!--- <cfinvoke component="service.user"
             method="updateUserProfile"
             returnvariable="updateUserByIdProfile">		
                <cfinvokeargument name="id" value=#form.fld_idProfileForm#>		
@@ -64,7 +64,19 @@
                <cfinvokeargument name="city" value=#form.fld_cityProfileForm#>
                <cfinvokeargument name="state" value=#form.fld_stateProfileForm#>
                <cfinvokeargument name="country" value=#form.fld_countryProfileForm#>
-            </cfinvoke>	
+            </cfinvoke>	 --->
+
+            <!--- Service define over Application.cfc --->
+            <cfset updateUserByIdProfile=application.userService.updateUserProfile(
+                #form.fld_idProfileForm#,
+                #form.fld_firstNameProfileForm#,
+                #form.fld_lastNameProfileForm#,
+                #form.fld_address1ProfileForm#,
+                #form.fld_address2ProfileForm#,
+                #form.fld_streetProfileForm#,
+                #form.fld_cityProfileForm#,
+                #form.fld_stateProfileForm#,
+                #form.fld_countryProfileForm#)>
 
             <cfif updateUserByIdProfile.userResult.recordCount GT 0>
                 <cfset profileMessages = 1>
@@ -77,12 +89,16 @@
 
         </cfif>
 
+        
         <!--- Always Run:Retrieve Specific User from Database --->
-        <cfinvoke component="service.user"
+        <!--- <cfinvoke component="service.user"
         method="retrieveUserById"
         returnvariable="retrieveUserById">		
            <cfinvokeargument name="id" value=#url.id#>		
-        </cfinvoke>	
+        </cfinvoke>	 --->
+
+        <!--- Service define over Application.cfc --->
+        <cfset retrieveUserById=application.userService.retrieveUserById(#url.id#)>
 
         <!--- <cfdump var="#retrieveUserById#"> --->
 
@@ -94,6 +110,17 @@
 
         
 
+    </div>
+
+    <div style="background-color: blue">
+        <cfdump var="#session#">
+        <cfoutput>
+            Session ID: #session.CFID#
+            <br>
+            Session TOKEN: #session.CFTOKEN#
+            <br>
+            Session ID-TOKEN: #session.CFID#-#session.CFTOKEN#
+        </cfoutput>
     </div>
 
 

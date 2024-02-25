@@ -4,7 +4,7 @@
    <cffunction name="retrieveUserAll"
       hint="Retrieve all User" returntype="struct"> 
 
-      <cfquery datasource="central_remote" name="rs_user" result="rs_userResult">
+      <cfquery name="rs_user" result="rs_userResult">
          SELECT * FROM tbl_user
       </cfquery>
 
@@ -20,7 +20,7 @@
 
       <cfargument name="id" type="numeric" required="yes" default="">      
 
-      <cfquery datasource="central_remote" name="rs_user" result="rs_userResult">
+      <cfquery name="rs_user" result="rs_userResult">
          SELECT * FROM tbl_user
          WHERE id = 
          <cfqueryparam cfsqltype="numeric" value="#id#">
@@ -38,7 +38,7 @@
       <cfargument name="username" type="string" required="yes" default="">
       <cfargument name="password" type="string" required="yes" default="">
 
-      <cfquery datasource="central_remote" name="rs_user" result="rs_userResult">
+      <cfquery name="rs_user" result="rs_userResult">
          SELECT * FROM tbl_user
          WHERE username = <cfqueryparam cfsqltype="varchar" value="#username#">
          AND password = <cfqueryparam cfsqltype="varchar" value="#password#">
@@ -57,7 +57,7 @@
       <cfargument name="firstName" type="string" required="yes" default="">
       <cfargument name="lastName" type="string" required="yes" default="">
 
-      <cfquery datasource="central_remote" name="rs_user" result="rs_userResult">
+      <cfquery name="rs_user" result="rs_userResult">
             SELECT * FROM tbl_user
             WHERE username = <cfqueryparam cfsqltype="varchar" value="#username#">
             AND firstName = <cfqueryparam cfsqltype="varchar" value="#firstName#">
@@ -78,7 +78,7 @@
    <cfargument name="firstName" type="string" required="yes" default="">
    <cfargument name="lastName" type="string" required="yes" default="">
 
-   <cfquery datasource="central_remote" result="rs_userResult">
+   <cfquery result="rs_userResult">
          INSERT INTO tbl_user
             (username, password, firstname, lastName)
             VALUES (
@@ -103,7 +103,7 @@
    <cfargument name="username" type="string" required="yes" default="">
    <cfargument name="password" type="string" required="yes" default="">
 
-   <cfquery datasource="central_remote" name="rs_user" result="rs_userResult">
+   <cfquery name="rs_user" result="rs_userResult">
       UPDATE tbl_user
       SET username = <cfqueryparam cfsqltype="varchar" value="#username#">,
           password = <cfqueryparam cfsqltype="varchar" value="#password#">
@@ -131,7 +131,7 @@
       <cfargument name="state" type="string" required="yes" default="">
       <cfargument name="country" type="string" required="yes" default="">
    
-      <cfquery datasource="central_remote" name="rs_user" result="rs_userResult">
+      <cfquery name="rs_user" result="rs_userResult">
          UPDATE tbl_user
          SET firstName = <cfqueryparam cfsqltype="varchar" value="#firstName#">,
              lastName = <cfqueryparam cfsqltype="varchar" value="#lastName#">,
@@ -157,7 +157,7 @@
 
    <cfargument name="id" type="numeric" required="yes" default=""> 
 
-   <cfquery datasource="central_remote" name="rs_user" result="rs_userResult">
+   <cfquery name="rs_user" result="rs_userResult">
       DELETE FROM tbl_user
       WHERE id = <cfqueryparam cfsqltype="integer" value="#id#">
    </cfquery>

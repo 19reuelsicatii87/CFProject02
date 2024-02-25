@@ -3,6 +3,15 @@
 	<cfset this.applicationtimeout="#createtimespan(0,0,1,0)#">
     <cfset this.sessionManagement=true>
 	<cfset this.sessionTimeout="#createtimespan(0,0,0,30)#">
+	<cfset this.datasource="central_remote">
+
+	<!--- Global Mapping: View Component --->
+	<!--- Cannot make it work. Need to explore more --->
+	<!--- <cfset this.mappings['/view']=getDirectoryFromPath(getCurrentTemplatePath())&"view">; --->
+
+	<!--- Global Mapping: Service Component --->
+	<!--- Cannot make it work. Need to explore more --->
+	<!--- <cfset this.mappings['/service']=getDirectoryFromPath(getCurrentTemplatePath())&"service">; --->
 
 	<cffunction name="onApplicationStart">
 		<script>
@@ -30,6 +39,10 @@
 			console.log("")
 			</cfoutput>
 		</script>
+
+		<!--- defining a user Service --->
+		<cfset application.userService = createObject("component", "service.user")/>
+
 	</cffunction>
 
 	<cffunction name="onRequest">
