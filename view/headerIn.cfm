@@ -23,6 +23,9 @@
                          <li class="nav-item">
                             <a class="nav-link active" href="/users.cfm">Users</a>
                          </li>
+                         <li class="nav-item">
+                           <a class="nav-link active" href="/logout.cfm">Logout</a>
+                        </li>
                       </ul>
                    </div>
                 </div>

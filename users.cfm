@@ -1,25 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Users List</title>
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-</head>
-
-<body>
 
     <!--- Header --->
     <cfmodule template="\view\headerIn.cfm">
 
+        <!--- Show modal only once --->
+        <!--- <cfif NOT structKeyExists(application, "successLogin") OR NOT application.successLogin> --->
+
+            <!--- Show success modal for Admin and Members. Else redirect back to Login page --->
+            <cftry>
+            <cfif  structKeyExists(session.userSession, 'is_Admin') AND  session.userSession.is_Admin EQ 1>
+
+                <cfmodule template="\view\modalNotif.cfm" title="Success" message="Login successfully, Welcome back Admin! 
+                Your session will expire at #session.userSession.sessionEnd#"> 
+
+            <cfelseif  structKeyExists(session.userSession, 'is_Admin') AND  session.userSession.is_Admin EQ 0>
+
+                <cfmodule template="\view\modalNotif.cfm" title="Success" message="Login successfully, Welcome back Member!
+                Your session will expire at #session.userSession.sessionEnd#"> 
+            
+            </cfif>
+
+            <cfcatch type="any">
+                <cflocation url="index.cfm" addToken="false" statusCode="301"> 
+            </cfcatch>
+        </cftry>
+            
+        
+        <!--- Set the flag in the application scope to indicate that the file has been rendered --->
+        <!--- <cfset application.successLogin = true> --->
+
+        <!--- </cfif> --->
+
+
+        
+
     <div class="container mt-3">
 
+        <!--- Delete User based on ID --->  
         <cfif structKeyExists(url, "method") and url.method eq "deleteUser">
             <cfinvoke component="service.user"
             method="deleteUserById"
@@ -29,25 +45,18 @@
         </cfif>
 
         <!--- Retrieve All Users from Database --->                
-        <cfinvoke component="service.user"
+        <!--- <cfinvoke component="service.user"
         method="retrieveUserAll"
         returnvariable="retrieveUserAll">		
-        </cfinvoke>	
+        </cfinvoke>	 --->
+
+        <!--- Retrieve All Users from Database --->  
+        <cfset retrieveUserAll=application.userService.retrieveUserAll()>
 
         <!--- Users Table --->
-        <cfmodule template="\view\userTable.cfm" userAll=#retrieveUserAll#>         
+        <cfmodule template="\view\userTable.cfm" userAll=#retrieveUserAll#>       
+            
+            
+        <cfdump var="#session.userSession#">
 
     </div>
-
-
-
-
-
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
-
-</body>
-
-</html>

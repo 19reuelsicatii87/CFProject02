@@ -5,13 +5,17 @@
 	<cfset this.sessionTimeout="#createtimespan(0,0,0,30)#">
 	<cfset this.datasource="central_remote">
 
-	<!--- Global Mapping: View Component --->
-	<!--- Cannot make it work. Need to explore more --->
-	<!--- <cfset this.mappings['/view']=getDirectoryFromPath(getCurrentTemplatePath())&"view">; --->
+	<!--- Regular Mapping(struct): View - CFM --->
+	<cfset this.mappings['/sampleMappingToView']=getDirectoryFromPath(getCurrentTemplatePath())&"view">
 
-	<!--- Global Mapping: Service Component --->
-	<!--- Cannot make it work. Need to explore more --->
-	<!--- <cfset this.mappings['/service']=getDirectoryFromPath(getCurrentTemplatePath())&"service">; --->
+	<!--- Regular Mapping(struct): Service - CFC --->
+	<cfset this.mappings['/sampleMappingToComponent']=getDirectoryFromPath(getCurrentTemplatePath())&"service">
+
+	<!--- Customtagpaths Mapping(array): View - CFM --->
+	<cfset this.customtagpaths=[getDirectoryFromPath(getCurrentTemplatePath())&"view"]>
+
+	<!--- Componentpaths Mapping(array): View - CFC --->
+	<cfset this.componentpaths=[getDirectoryFromPath(getCurrentTemplatePath())&"service"]>
 
 	<cffunction name="onApplicationStart">
 		<script>
@@ -43,6 +47,31 @@
 		<!--- defining a user Service --->
 		<cfset application.userService = createObject("component", "service.user")/>
 
+		<!--- delare a sample session --->
+		<!--- <cfset session.sampleSession = {'street'='jupiter', 'city'='makati'}/>
+		<cfdump var="#session.sampleSession#">
+		<cfoutput>Street: #session.sampleSession.street# </cfoutput> --->
+
+		<!--- Html: Head and Start of Body --->
+		<cfoutput>
+			<!DOCTYPE html>
+			<html>
+			<head>
+				<title>
+					TBD
+				</title>
+				<!-- Bootstrap CSS -->
+				<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" 
+					rel="stylesheet" 
+					integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
+					crossorigin="anonymous">
+
+					<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+			</head>
+			<body>
+		</cfoutput>
+		
+
 	</cffunction>
 
 	<cffunction name="onRequest">
@@ -63,6 +92,18 @@
 				console.log("")
 			</cfoutput>
 		</script>
+
+		<!--- Html: End of Body --->
+		<cfoutput>		
+
+			<!-- Option 1: Bootstrap Bundle with Popper -->
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+				integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
+				crossorigin="anonymous"></script>
+		</body>
+		</html>
+		</cfoutput>
+
 	</cffunction>
 
 </cfcomponent>
